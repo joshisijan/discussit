@@ -1,0 +1,67 @@
+{% extends 'qna/base.html' %}
+
+{% block header %}
+<div class="lead mb-3">
+    <div>
+        Search result for <span class="text-danger"> {{prefilled_keyword}}:</span>
+    </div>
+    <div class="mt-2">
+        <a class="btn btn-sm btn-info" href="{% url 'addquestion_page' %}">Add Question</a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+
+{% if result.count <= 0 %}
+    <span class="text-danger">No Result Found</span>
+{% endif %}
+
+{% for result in result %}
+
+<div>
+    <div class="row">
+        <div class="col-md-1 col-12">
+            <div class="row">
+                <div class="col-md-12 col-6">
+                    <div class="d-flex justify-content-center">
+                        {{result.get_no_of_votes}}
+                    </div>
+                    <div class="small d-flex justify-content-center">
+                        Votes
+                    </div>
+                </div>
+                <div class="col-md-12 col-6">
+                    <div class="d-flex justify-content-center">
+                        {{result.get_answers.count}}
+                    </div>
+                    <div class="small d-flex justify-content-center">
+                        Answers
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-11 col-12">
+            <div>
+                <a href="{% url 'question_page' result.id %}" class="text-info">{{result.title}}</a>
+            </div>
+            <div class="small">
+                {{result.body}}
+            </div>
+            <br>
+            <div class="small text-muted d-flex justify-content-between">
+                <span>Category: {{result.category}}</span>
+                <span>{{result.pub_date}}</span>
+            </div>
+        </div>
+    </div>
+    <hr class="bg-secondary">
+</div>
+
+{% endfor %}
+
+{% block pagiation %}
+
+{% endblock pagiation %}
+
+{% endblock content %}

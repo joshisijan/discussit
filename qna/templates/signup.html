@@ -1,0 +1,71 @@
+{% extends 'qna/base.html' %}
+
+{% block header %}
+<div class="lead">
+    Signup
+</div>
+{% endblock header %}
+
+{% block content %}
+
+<div class="py-3">
+    <div class="row">
+        <div class="col-12 col-lg-6 offset-lg-3">
+            <form action="{% url 'signup_page' %}" method="POST">
+                <div class="badge badge-danger mb-2">{{signup_error}}</div>
+                {% csrf_token %}
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{request.GET.next}}"> 
+                {% endif %}
+                {% if request.GET.asking %}
+                <input type="hidden" name="asking" value="1"> 
+                {% endif %}
+                <div class="form-gorup">
+                    <label for="firstname" class="small text-info">First Name:</label>
+                    <input class="form-control form-control-sm" type="text" id="firstname" name="firstname" placeholder="Firstname" value="{{p_fname}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-gorup">
+                    <label for="lastname" class="small text-info">Last Name:</label>
+                    <input class="form-control form-control-sm" type="text" id="lastname" name="lastname" placeholder="Lastname" value="{{p_lname}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-gorup">
+                    <label for="username" class="small text-info">Username:</label>
+                    <input class="form-control form-control-sm {{user_invalid}}" type="text" id="username" name="username" placeholder="Username" value="{{p_user}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-gorup">
+                    <label for="email" class="small text-info">Email:</label>
+                    <input class="form-control form-control-sm {{email_invalid}}" type="email" id="email" name="email" placeholder="Email" value="{{p_email}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-gorup">
+                    <label for="password" class="small text-info">Password:</label>
+                    <input class="form-control form-control-sm {{pass_invalid}}" type="password" id="password" name="password" placeholder="Password" value="{{p_pass}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-gorup">
+                    <label for="password1" class="small text-info">Confirm Password:</label>
+                    <input class="form-control form-control-sm {{pass_invalid}}" type="password" id="password1" name="password1" placeholder="Confirm Password" value="{{p_pass1}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-group">
+                    <button class="btn btn-sm btn-info" type="submit">Signup</button>
+                </div>
+                <div class="form-group">
+                    <a href="#" class="text-info"><i>Already Have Account?</i></a>
+                </div>
+            </form> 
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'qna/base.html' %}
+
+{% block header %}
+<div class="lead">
+    Category
+</div>
+{% endblock header %}
+
+{% block content %}
+<div>
+    {% for category in categories %}
+    <a href="#" class="btn btn-sm btn-info">{{category.name}}</a>
+    {% endfor %}
+</div>
+{% endblock content %}

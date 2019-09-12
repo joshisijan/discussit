@@ -1,0 +1,100 @@
+{% extends 'qna/base.html' %}
+
+{% load static %}
+
+{% block link %}
+<script src="{% static 'assets/ckeditor/ckeditor.js' %}"></script>
+{% endblock link %}
+
+{% block header %}
+<div class="lead mb-3">
+    <span>{{question.title}}</span>
+</div>
+<div class="d-flex justify-content-between align-items-center">
+    <div class="small"><i>Question By <a href="#" class="text-info">{{question.creator}}</a></i></div>
+    <a class="btn btn-sm btn-info" href="{% url 'addquestion_page' %}">Add Question</a>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div>
+    <div class="row">
+        <div class="col-2">
+            <form action="">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div>
+                        <button type="submit" class="btn btn-small border-0 py-0 px-2"><i class="fas fa-caret-up"
+                                style="font-size: 1.5rem;"></i></button>
+                    </div>
+                    <div class="px-2">{{question.get_no_of_votes}}</div>
+                    <div>
+                        <button type="submit" class="btn btn-small border-0 py-0 px-2"><i class="fas fa-caret-down"
+                                style="font-size: 1.5rem;"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-10">
+            {{question.body|safe}}
+        </div>
+    </div>
+    <hr class="bg-secondary">
+</div>
+<div class="lead mb-3 text-danger">
+    {{question.get_answers.count}} Answers
+</div>
+{% if question.get_answers.count <= 0 %}
+<span class="text-danger">No answers yet</span>
+{% endif %}
+{% for answer in question.get_answers %}
+<div>
+    <div>
+        <div class="row">
+            <div class="col-2">
+                <form action="">
+                    <form action="">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div>
+                                <button type="submit" class="btn btn-small border-0 py-0 px-2"><i
+                                        class="fas fa-caret-up" style="font-size: 1.5rem;"></i></button>
+                            </div>
+                            <div class="px-2">{{answer.get_no_of_votes}}</div>
+                            <div>
+                                <button type="submit" class="btn btn-small border-0 py-0 px-2"><i
+                                        class="fas fa-caret-down" style="font-size: 1.5rem;"></i></button>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+            <div class="col-10">
+                <div class="small"><i>Answer by <a href="#" class="text-info">joshisijan</a></i></div>
+                <div class="small"><i>{{answer.pub_date}}</i></div>
+                {{answer.body}}
+            </div>
+        </div>
+    </div>
+    <hr class="bg-secondary">
+</div>
+{% endfor %}
+<div>
+    <div class="lead my-3">
+        Your Answer
+    </div>
+    <div>
+        <form action="">
+            <div class="form-group">
+                <textarea name="editor"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-info">Post Your Answer</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+CKEDITOR.replace('editor');
+</script>
+{% endblock script %}

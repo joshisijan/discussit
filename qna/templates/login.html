@@ -1,0 +1,44 @@
+{% extends 'qna/base.html' %}
+
+{% block header %}
+<div class="lead">
+    Login
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="py-3">
+    <div class="row">
+        <div class="col-12 col-lg-6 offset-lg-3">
+            <form action="{% url 'login_page' %}" method="POST">
+                {% csrf_token %}
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{request.GET.next}}"> 
+                {% endif %}
+                {% if request.GET.asking %}
+                <input type="hidden" name="asking" value="1"> 
+                {% endif %}
+                <div class="badge badge-danger mb-2">{{login_error}}</div>
+                <div class="form-gorup">
+                    <label for="username" class="small text-info">Username:</label>
+                    <input class="form-control form-control-sm {{user_invalid}}" type="text" id="username" name="username" placeholder="Username" value="{{filled_user}}"
+                        required autofocus>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-gorup">
+                    <label for="password" class="small text-info">Password:</label>
+                    <input class="form-control form-control-sm {{pass_invalid}}" type="password" id="password" name="password" placeholder="Password" value="{{filled_pass}}"
+                        required>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-group">
+                    <button class="btn btn-sm btn-info" type="submit">Login</button>
+                </div>
+                <div class="form-group">
+                    <a href="{% url 'signup_page' %}" class="text-info"><i>Or Create New Account</i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
